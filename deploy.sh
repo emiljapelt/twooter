@@ -5,6 +5,11 @@
 # $3 = server ip
 # $4 = server password
 
+read -r -p "Set MSSQL User: " MSSQL_USER
+read -r -s -p "Set MSSQL DB Password: " MSSQL_SA_PASSWORD
+
+CONNECTION_STRING="Server=dbserver,1433;Database=Minitwit;Trusted_Connection=True;Integrated Security=false;User Id=$MSSQL_USER;Password=$MSSQL_SA_PASSWORD"
+
 apt update
 apt install -y apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
@@ -42,7 +47,7 @@ ssh root@$3 "
 
   docker run \
     -e \"ACCEPT_EULA=y\" \
-    -e \"MSSQL_SA_PASSWORD=Memelord2\" \
+    -e \"MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD\" \
     -p 1433:1433 \
     --name dbserver \
     -h dbserver \
@@ -54,6 +59,7 @@ ssh root@$3 "
   docker run \
      --rm \
      -e ASPNETCORE_URLS=\"http://0.0.0.0:80\" \
+     -e CONNECTION_STRING=\"$CONNECTION_STRING\" \
      -p 443:443 \
      -p 80:80 \
      --name twooter-instance \
