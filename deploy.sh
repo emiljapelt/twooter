@@ -32,8 +32,30 @@ ssh root@$3 "
   apt-cache policy docker-ce
   apt install -y docker-ce
   docker login https://docker.pkg.github.com -u $1 -p $2
+  docker stop dbserver
+  docker rm dbserver
+  docker rmi mcr.microsoft.com/mssql/server:2019-latest
   docker stop twooter-instance
   docker rm twooter-instance
   docker rmi docker.pkg.github.com/themagicstrings/twooter/twooter:latest
+  docker pull mcr.microsoft.com/mssql/server:2019-latest
+
+  docker run \
+    -e \"ACCEPT_EULA=y\" \
+    -e \"MSSQL_SA_PASSWORD=Memelord2\" \
+    -p 1433:1433 \
+    --name dbserver \
+    -h dbserver \
+    -d \
+    mcr.microsoft.com/mssql/server:2019-latest
+
+  sleep 5
   docker pull docker.pkg.github.com/themagicstrings/twooter/twooter:latest
-  docker run --rm -p 443:443 -p 80:80 --name twooter-instance docker.pkg.github.com/themagicstrings/twooter/twooter:latest -e ASPNETCORE_URLS=\"http://localhost:80;https://localhost:443\""
+  docker run \
+     --rm \
+     -e ASPNETCORE_URLS=\"http://0.0.0.0:80\" \
+     -p 443:443 \
+     -p 80:80 \
+     --name twooter-instance \
+     --link dbserver:dbserver \
+     docker.pkg.github.com/themagicstrings/twooter/twooter:latest"
