@@ -29,7 +29,7 @@ namespace Api
 
       if (user is null)
       sb.Append(@"
-    <a href=""public"">public timeline</a> |
+    <a href=""public"">public timeline meme</a> |
     <a href=""sign_up"">sign up</a> |
     <a href=""login"">sign in</a>");
     else sb.Append($@"
