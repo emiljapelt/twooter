@@ -80,7 +80,7 @@ jobs:
           END
         env:
           SSH_USER: ${{ secrets.SERVER_USER }}
-          SSH_KEY: ${{ secrets.SERVER_PASSWORD }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_HOST: ${{ secrets.SERVER_IP }}
       - name: Pull and run docker image with SSH
         # Run ssh with config file and script
