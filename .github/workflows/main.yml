@@ -96,5 +96,5 @@ jobs:
             docker rm twooter-instance || true
             docker rmi docker.pkg.github.com/emiljapelt/twooter/twooter:latest || true
             
-            docker run -d -e \"ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443\" -e \"DBPASSWORD=${{ secrets.DB_PASSWORD }}\" -p 443:443 -p 80:80 --net twooter-network --name twooter-instance docker.pkg.github.com/emiljapelt/twooter/twooter
+            docker run -d -e \"ASPNETCORE_URLS=http://0.0.0.0:80\" -e \"DBPASSWORD=${{ secrets.DB_PASSWORD }}\" -p 443:443 -p 80:80 --net twooter-network --name twooter-instance docker.pkg.github.com/emiljapelt/twooter/twooter
           "
