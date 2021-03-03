@@ -32,6 +32,8 @@ namespace Api
             var dbpassword = System.Environment.GetEnvironmentVariable("DBPASSWORD");
             var connectionString = "Server=dbserver.twooter-network,1433;Database=Minitwit;Trusted_Connection=True;Integrated Security=false;User Id=SA;Password=" + dbpassword;
 
+            System.Console.WriteLine(connectionString);
+
             services.AddDbContext<MinitwitContext>(o => o.UseSqlServer(connectionString));
             services.AddScoped<IMinitwitContext, MinitwitContext>();
             services.AddScoped<IUserRepository, UserRepository>();
